@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактирование товара</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet">
+</head>
+<body>
+<h3>Изменение статуса заказа</h3>
+<form th:method="POST" th:action="@{/admin/orderList/edit/{id}(id=${editOrder.getId()})}" th:object="${editOrder}">
+  <br>
+
+
+           <select>
+                <option th:each="status : ${T(com.example.springsecurityapplication.enumm.Status).values()}"
+                        th:value="${status}"
+                        th:text="${status}">
+                </option>
+            </select>
+
+    <label hidden for="number"></label>
+  <textarea hidden th:field="*{number}" placeholder="Номер заказа" id="number"></textarea>
+    <label hidden for="price"></label>
+    <textarea hidden th:field="*{price}" placeholder="Номер заказа" id="price"></textarea>
+    <label hidden for="person"></label>
+    <textarea hidden th:field="*{person}" placeholder="Номер заказа" id="person"></textarea>
+    <label hidden for="product"></label>
+    <textarea hidden th:field="*{product}" placeholder="Номер заказа" id="product"></textarea>
+    <label hidden for="datetime"></label>
+    <textarea hidden th:field="*{dateTime}" placeholder="Номер заказа" id="datetime"></textarea>
+    <label hidden for="count"></label>
+    <textarea hidden th:field="*{count}" placeholder="Номер заказа" id="count"></textarea>
+
+ <br>
+    <input type="submit" value="Редактировать">
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-wweight="http://www.w3.org/1999/xhtml"
+      xmlns:color="http://www.w3.org/1999/xhtml" xmlns:font-size="http://www.w3.org/1999/xhtml"
+      xmlns:text-align="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Авторизация</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet">
+</head>
+<body>
+<br>
+<form>
+  <input type="button" value="Вернуться в личный кабинет" onclick="history.back()">
+</form>
+
+<form th:method="POST" th:action="@{/admin/orderList/search/}">
+  <fieldset>
+
+    <label for="search">Поиск по четырём последним символам номера заказа</label>
+    <br>
+
+    <input type="search" name="search" th:value="*{value_search}" id="search" minlength="4" maxlength="4">
+
+
+    <br>
+    <br>
+    <input type="submit" value="Найти">
+    <div th:if="${param.error}" style="color: red">
+      Неправильный логин или пароль
+    </div>
+  </fieldset>
+
+</form>
+
+
+<h3 style="font-weight: bold; font-size: 44px; color: #259376; text-align:center">Результат: </h3>
+
+<br>
+<div th:each="order: ${search_order}">
+  <p th:text="'Номер: ' + ${order.getNumber()}"></p>
+  <p th:text="'Статус заказа: ' + ${order.getStatus}"></p>
+  <p th:text="'Название продукта: ' + ${order.getProduct().getTitle()}"></p>
+  <p th:text="'Логин пользователя: ' + ${order.getPerson().getLogin()}"></p>
+
+  <!--  <p th:text="'Состояние: ' + ${person.getStatus()}"></p>-->
+  <p th:text="'Цена: ' + ${order.getPrice()}"></p>
+  <p th:text="'Количество: ' + ${order.getCount}"></p>
+  <p th:text="'Дата заказа:' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyy')}"></p>
+
+  <a th:href="@{/admin/orderList/edit/{id}(id=${order.getId()})}">Редактировать заказ</a>
+  <a th:href="@{/admin/orderList/delete/{id}(id=${order.getId()})}">Удалить заказ</a>
+  <hr>
+</div>
+<hr>
+  <hr>
+<div>
+  <h1>Список заказов</h1>
+  <div th:each="order: ${orders}">
+    <p th:text="'Номер: ' + ${order.getNumber()}"></p>
+    <p th:text="'Статус заказа: ' + ${order.getStatus}"></p>
+    <p th:text="'Название продукта: ' + ${order.getProduct().getTitle()}"></p>
+    <p th:text="'Логин пользователя: ' + ${order.getPerson().getLogin()}"></p>
+
+    <!--  <p th:text="'Состояние: ' + ${person.getStatus()}"></p>-->
+    <p th:text="'Цена: ' + ${order.getPrice()}"></p>
+    <p th:text="'Количество: ' + ${order.getCount}"></p>
+    <p th:text="'Дата заказа:' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyy')}"></p>
+
+    <a th:href="@{/admin/orderList/edit/{id}(id=${order.getId()})}">Редактировать заказ</a>
+    <a th:href="@{/admin/orderList/delete/{id}(id=${order.getId()})}">Удалить заказ</a>
+    <hr>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>
